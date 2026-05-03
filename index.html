@@ -68,171 +68,170 @@
     </style>
     <script>
         function submitForm() {
-      event.preventDefault();       
+            event.preventDefault();
 
-            
+
             let name = document.getElementById("name").value;
             let isValid = true;
-            if (name === ""|| name == null) {
+            if (name === "" || name == null) {
 
                 document.getElementById("nameError").innerText = "Name is required!"
                 isValid = false;
-            
-                } else
-                {
-                    document.getElementById("nameError").innerText = "";
+
+            } else {
+                document.getElementById("nameError").innerText = "";
+            }
+
+            let email = document.getElementById("email").value;
+            if (email === "" || !email.includes("@")) {
+                document.getElementById("emailError").innerText = "Enter valid email";
+                isValid = false;
+            } else {
+                document.getElementById("emailError").innerText = "";
+            }
+
+            let password = document.getElementById("password").value;
+            if (password === "") {
+                document.getElementById("passwordError").innerText = "Password is Required!";
+                isValid = false;
+            } else {
+                if (password.length < 8) {
+                    document.getElementById("passwordError").innerText = "Password must be at least 6 characters!";
+                    isValid = false;
+                } else {
+                    document.getElementById("passwordError").innerText = "";
                 }
 
-                let email = document.getElementById("email").value;
-                if (email === "" || !email.includes("@") ) {
-                        document.getElementById("emailError").innerText = "Enter valid email";
-                   isValid = false;
-                }else {
-                        document.getElementById("emailError").innerText = "";
-                    }
 
-                    let password = document.getElementById("password").value;
-                    if (password === "") {
-                        document.getElementById("passwordError").innerText = "Password is Required!";
-                        isValid = false;
-                    } else {
-                        if (password.length < 8) {
-                            document.getElementById("passwordError").innerText = "Password must be at least 6 characters!";
-                            isValid = false;
-                        } else {
-                            document.getElementById("passwordError").innerText = "";
-                        }
+            }
+
+            let city = document.getElementById("city");
+            if (city === "") {
+                document.getElementById("cityError").innerText = "Select a city!";
+                isValid = false;
+            } else {
+                document.getElementById("cityError").innerText = "";
+            }
+
+            let gender = document.querySelector('input[name="gender"]:checked');
+            if (!gender) {
+                document.getElementById("genderError").innerText = "Select gender!";
+                isValid = false;
+            } else {
+                document.getElementById("genderError").innerText = "";
+            }
+
+            let hobbies = document.querySelectorAll('input[name="hobby"]:checked');
+            if (hobbies.length === 0) {
+                document.getElementById("hobbyError").innerText = "Select at least one hobby!";
+                isValid = false;
+            } else {
+                document.getElementById("hobbyError").innerText = "";
+            }
+
+            if (isValid) {
+                alert("hello " + name + " Form Submit Successfully!")
+                return true;
+            }
+
+            return false;
+        }
+
+        function oninputChangeName(nameValue) {
+            if (nameValue.trim() === "") {
+                document.getElementById("nameError").innerText = "Name is required!";
+                return false;
+            }
+            else if (nameValue.length < 3) {
+                document.getElementById("nameError").innerText = "Name must be at least 3 letters!";
+                return false;
+            }
+            else {
+                document.getElementById("nameError").innerText = "";
+                return true;
+            }
+        }
+
+        function oninputChangeEmail(emailValue) {
+            if (emailValue.trim() === "") {
+                document.getElementById("emailError").innerText = "Email is required!";
+                return false;
+            }
+            else if (!emailValue.includes("@") || !emailValue.includes(".com")) {
+                document.getElementById("emailError").innerText = "Email must contain @ and .com!";
+                return false;
+            }
+            else {
+                document.getElementById("emailError").innerText = "";
+                return true;
+            }
+        }
+
+        function oninputChangePassword(passwordValue) {
+            let letters = 0, digits = 0, special = 0;
+
+            if (passwordValue === "") {
+                document.getElementById("passwordError").innerText = "Password is required!";
+                return false;
+            }
+
+            if (passwordValue.length < 8) {
+                document.getElementById("passwordError").innerText = "Password must be 3 letters, 4 digits, 1 special character!";
+                return false;
+            }
+
+            for (let ch of passwordValue) {
+                if (/[a-zA-Z]/.test(ch)) letters++;
+                else if (/[0-9]/.test(ch)) digits++;
+                else special++;
+            }
+
+            if (letters < 3) {
+                document.getElementById("passwordError").innerText = "Must contain 3 letters!";
+                return false;
+            }
+            if (digits < 4) {
+                document.getElementById("passwordError").innerText = "Must contain 4 digits!";
+                return false;
+            }
+            if (special < 1) {
+                document.getElementById("passwordError").innerText = "Must contain 1 special character!";
+                return false;
+            }
+
+            document.getElementById("passwordError").innerText = "";
+            return true;
+        }
+
+        function checkFormValidity() {
+
+            let name = document.getElementById("name").value.trim();
+            let email = document.getElementById("email").value.trim();
+            let password = document.getElementById("password").value;
+            let city = document.getElementById("city").value;
+
+            let gender = document.querySelector('input[name="gender"]:checked');
+            let hobbies = document.querySelectorAll('input[name="hobby"]:checked');
+
+            // Validation checks
+            /* let isNameValid = oninputChangeName(nameValue);
+             let isEmailValid = oninputChangeEmail(emailValue);
+             let isPasswordValid = oninputChangePassword(passwordValue);
+             let isCityValid = city !== "";
+             let isGenderValid = gender !== null;
+             let isHobbyValid = hobbies.length > 0;*/
+
+            let isValid =
+                name.length >= 3 &&
+                email.includes("@") &&
+                password.length >8 &&
+                city !== "" &&
+                gender !== null &&
+                hobbies.length > 0;
 
 
-                    }
-
-                    let city = document.getElementById("city");
-                    if (city === "") {
-                        document.getElementById("cityError").innerText = "Select a city!";
-                        isValid = false;
-                    } else {
-                        document.getElementById("cityError").innerText = "";
-                    }
-
-                    let gender = document.querySelector('input[name="gender"]:checked');
-                    if (!gender) {
-                        document.getElementById("genderError").innerText = "Select gender!";
-                        isValid = false;
-                    } else {
-                        document.getElementById("genderError").innerText = "";
-                    }
-
-                    let hobbies = document.querySelectorAll('input[name="hobby"]:checked');
-                    if (hobbies.length === 0) {
-                        document.getElementById("hobbyError").innerText = "Select at least one hobby!";
-                        isValid = false;
-                    } else {
-                        document.getElementById("hobbyError").innerText = "";
-                    }
-
-                    if (isValid) {
-                        alert("hello " + name + " Form Submit Successfully!")
-                        return true;
-                    }
-
-                    return false;
-                }
-
-    function oninputChangeName(nameValue) { 
-    if (nameValue.trim() === "") {
-        document.getElementById("nameError").innerText = "Name is required!";
-        return false;
-    } 
-    else if (nameValue.length < 3) {
-        document.getElementById("nameError").innerText = "Name must be at least 3 letters!";
-        return false;
-    } 
-    else {
-        document.getElementById("nameError").innerText = "";
-        return true;
-    }
-}
-
-function oninputChangeEmail(emailValue) { 
-    if (emailValue.trim() === "") {
-        document.getElementById("emailError").innerText = "Email is required!";
-        return false;
-    } 
-    else if (!emailValue.includes("@") || !emailValue.includes(".com")) {
-        document.getElementById("emailError").innerText = "Email must contain @ and .com!";
-        return false;
-    } 
-    else {
-        document.getElementById("emailError").innerText = "";
-        return true;
-    }
-}
-
-function oninputChangePassword(passwordValue) {
-    let letters = 0, digits = 0, special = 0;
-
-    if (passwordValue === "") {
-        document.getElementById("passwordError").innerText = "Password is required!";
-        return false;
-    }
-
-    if (passwordValue.length !== 8) {
-        document.getElementById("passwordError").innerText = "Password must be 3 letters, 4 digits, 1 special character!";
-        return false;
-    }
-
-    for (let ch of passwordValue) {
-        if (/[a-zA-Z]/.test(ch)) letters++;
-        else if (/[0-9]/.test(ch)) digits++;
-        else special++;
-    }
-
-    if (letters !== 3) {
-        document.getElementById("passwordError").innerText = "Must contain 3 letters!";
-        return false;
-    }
-    if (digits !== 4) {
-        document.getElementById("passwordError").innerText = "Must contain 4 digits!";
-        return false;
-    }
-    if (special !== 1) {
-        document.getElementById("passwordError").innerText = "Must contain 1 special character!";
-        return false;
-    }
-
-    document.getElementById("passwordError").innerText = "";
-    return true;
-}
-
-    function checkFormValidity() {
-
-    let name = document.getElementById("name").value.trim();
-    let email = document.getElementById("email").value.trim();
-    let password = document.getElementById("password").value;
-    let city = document.getElementById("city").value;
-
-    let gender = document.querySelector('input[name="gender"]:checked');
-    let hobbies = document.querySelectorAll('input[name="hobby"]:checked');
-
-    // Validation checks
-   /* let isNameValid = oninputChangeName(nameValue);
-    let isEmailValid = oninputChangeEmail(emailValue);
-    let isPasswordValid = oninputChangePassword(passwordValue);
-    let isCityValid = city !== "";
-    let isGenderValid = gender !== null;
-    let isHobbyValid = hobbies.length > 0;*/
-
-      let isValid =
-        name.length >= 3 &&
-        email.includes("@") &&
-        password.length === 8 &&
-        city !== "" &&
-        gender !== null &&
-        hobbies.length > 0;
-
-   
-    document.getElementById("submitBtn").disabled = !isValid;
-}
+            document.getElementById("submitBtn").disabled = !isValid;
+        }
 
 
     </script>
@@ -246,19 +245,20 @@ function oninputChangePassword(passwordValue) {
         <h2>Student Registration Form</h2>
 
         <label>Name:</label>
-        <input type="text" id="name" name="name"onchange="oninputChangeName(this.value);checkFormValidity()">
+        <input type="text" id="name" name="name" onchange="oninputChangeName(this.value);checkFormValidity()">
         <small style=color:red id="nameError"></small>
 
         <label>Email:</label>
-        <input type="email" id="email" name="email"onchange="oninputChangeEmail(this.value);checkFormValidity()">
+        <input type="email" id="email" name="email" onchange="oninputChangeEmail(this.value);checkFormValidity()">
         <small style=color:red id="emailError"></small>
 
         <label>Password:</label>
-        <input type="password" id="password" name="password"oninput="oninputChangePassword(this.value);checkFormValidity()">
+        <input type="password" id="password" name="password"
+            oninput="oninputChangePassword(this.value);checkFormValidity()">
         <small style=color:red id="passwordError"></small>
 
         <label>City:</label>
-        <select id="city"  onchange="checkFormValidity()">
+        <select id="city" onchange="checkFormValidity()">
             <option value="">Select City</option>
             <option>Islamabad</option>
             <option>Lahore</option>
@@ -268,7 +268,7 @@ function oninputChangePassword(passwordValue) {
         <small style=color:red id="cityError"></small>
 
         <label>Gender:</label>
-        <div class="gender"  onchange="checkFormValidity()">
+        <div class="gender" onchange="checkFormValidity()">
             <label>
                 <input type="radio" name="gender" value="male"> Male
             </label>
@@ -283,19 +283,19 @@ function oninputChangePassword(passwordValue) {
         <small style=color:red id="genderError"></small>
 
         <label>Hobbies:</label>
-        <div class="hobbies"  onchange="checkFormValidity()">
+        <div class="hobbies" onchange="checkFormValidity()">
             <label><input type="checkbox" name="hobby" value="reading"> Reading</label>
             <label><input type="checkbox" name="hobby" value="sports"> Sports</label>
             <label><input type="checkbox" name="hobby" value="music"> Music</label>
         </div>
         <small style=color:red id="hobbyError"></small>
-                
+
         <button type="submit" id="submitBtn" disabled>Submit
-           
+
         </button>
 
     </form>
 
 </body>
 
-</html> 
+</html>
